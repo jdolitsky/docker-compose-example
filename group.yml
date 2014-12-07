@@ -1,0 +1,19 @@
+name: counter
+
+containers:
+  web:
+    build: .
+    command: python app.py
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./python-app:/code
+    links:
+      - redis
+    environment:
+      - PYTHONUNBUFFERED=1
+  redis:
+    image: redis:latest
+    command: redis-server --appendonly yes
+    volumes:
+      - ./redis-data:/data
